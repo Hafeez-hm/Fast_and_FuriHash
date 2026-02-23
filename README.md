@@ -1,4 +1,4 @@
-# Hash Gone Good
+# Fast and Furi Hash 
 
 **B.Tech Final Year Thesis Project**  
 **NIT Calicut, 2024-25**
@@ -16,38 +16,69 @@ This project extends the work from "Hash Gone Bad" (USENIX Security'23), focusin
 - Study hash modeling techniques in symbolic verification
 - Propose improvements to the existing framework
 - Explore additional hash-based protocol vulnerabilities
+- Implemented and tested Jaffar's algorithm
 
 ## Quick Start
 
+
 ### Using Docker
 
-#### Using Docker
+#### 1. Pull the Docker Image
 
-Pull the image:
-
-```
-docker pull arunnats2004/proverif-compfun:latest
-```
-
-Run an interactive container:
+If you don't have the image:
 
 ```
-docker run -it arunnats2004/proverif-compfun:latest
+docker pull hafeez2003/proverif-jaffar:latest
 ```
 
-Verify the installation:
+
+#### 2. Code Version Information
+
+This repository (**Fast_and_FuriHash**) contains **only Jaffar's implementation** (all fixes applied) on the `main` branch.
+
+- **Original code:**
+  - Available at: [arunnats/hash-gone-good (main branch)](https://github.com/arunnats/hash-gone-good)
+- **This repository:**
+  - Contains only the improved Jaffar's implementation (no separate branch needed)
+
+#### 3. Run the Docker Container with Volume Mount
 
 ```
-proverif --help
+docker run -it -v ~/projects/Fast_and_FuriHash:/root hafeez2003/proverif-jaffar:latest /bin/bash
 ```
 
-#### Running Case Studies
+#### 4. Navigate to Protocol Directory
 
-Inside the container, navigate to the case studies directory and run a specific model. For example:
+Inside the container:
 
 ```
-cd ~/Proverif-Case-Studies/boundedAssoc
-make ike_s=1 m4="-D noFlat -D noCol"
+cd Proverif-Case-Studies/MDH_construct/
+```
+
+#### 5. Run the Protocols
+
+#### 5. Run Benchmarks and Tests
+
+- **Suttrhi's Benchmark:**
+  - Run the benchmark using:
+    ```
+    bash benchmark.sh
+    ```
+  - Output will be saved in `benchmark.res`.
+
+- **Test Our Implementation:**
+  - Run the test suite using:
+    ```
+    bash run-benchmark.sh
+    ```
+  - Output will be saved in `run-benchmark.res`.
+
+**Without collision model (faster):**
+
+```
+make sigma=1
+make ike_s=1
+make ike=1
 ```
 
 ## Repository Structure

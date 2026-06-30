@@ -66,11 +66,10 @@ The protocol models present in /protocols utilized in this repository are catego
   - **Universal_Protocol_Test**: These models were designed and implemented by us. Unlike the baseline benchmarks, this protocol was specifically engineered to stress-test the boundary conditions of our resolution axioms (e.g., highly nested associative tuples and extreme transcript depths) to ensure the framework does not exhibit state explosion or false negatives under non-standard configurations.
 
 
-# Setup and Run Guide
+## Setup and Run Guide
 
 This repository (**proverif-hash-resolution**) contains the implementation of **Jaffar's algorithm**, along with **resolution-level merge axioms** and **attacker-head variable axioms**.
 
----
 
 ## 1. Clone the Repository
 
@@ -79,23 +78,18 @@ git clone https://github.com/Hafeez-hm/proverif-hash-resolution.git
 cd proverif-hash-resolution
 ```
 
----
-
 ## 2. Pull the Docker Image
 
 ```bash
 docker pull hafeez2003/proverif-hash-resolution:ae-v1.0
 ```
 
----
 
 ## 3. Run the Docker Container
 
 ```bash
 docker run -it -v $(pwd):/root/MDH_construct hafeez2003/proverif-hash-resolution:ae-v1.0 /bin/bash
 ```
-
----
 
 ## 4. Enter the Main Verification Workspace
 
@@ -105,7 +99,6 @@ Inside the container, navigate to the main workspace:
 cd /root/MDH_construct
 ```
 
----
 
 ## 5. Running the Benchmark Suite (Head-to-Head Comparison)
 
@@ -124,7 +117,6 @@ benchmark.res
 
 This file summarizes the verification results comparing the **Current** and **Legacy** models.
 
----
 
 ## 6. Running the Ablation Suite (Contribution Validation)
 
@@ -148,7 +140,6 @@ This file summarizes the verification results for the following configurations:
 - **Ablation_Infra**
 - **Current**
 
----
 
 ## 7. View Results
 
@@ -168,8 +159,6 @@ logs/
 ```
 
 The logs are organized by the library set and model used during execution.
-
----
 
 ## 8. Run a Single Protocol Directly with `make`
 
@@ -211,86 +200,68 @@ To ensure stable execution of the verification models, we recommend the followin
 
 *Note: The results presented in our paper were verified on an Intel Core i5-11300H @ 3.10GHz processor with 12GB of RAM using a WSL2-based Linux environment. Experiments range from seconds to ~2 minutes per protocol. A timeout of 120s is enforced to prevent state-space explosion on complex models*
 
-# Testing Framework Overview
+## Testing Framework Overview
 
-The `Testing/` directory provides a comprehensive framework to validate the correctness and performance of our improved resolution axioms. We provide two distinct testing workflows:
+The `Testing/` directory provides two complementary workflows for evaluating the verification framework:
 
-- **Benchmark Suite** – Direct comparison between the current and legacy models.
-- **Ablation Suite** – Scientific validation of the contribution of individual axiomatic improvements.
+- **Benchmark Suite** – Compares the **Current** implementation against the **Legacy** baseline in terms of verification results and execution performance.
+- **Ablation Suite** – Evaluates the contribution of individual components by enabling or disabling specific sets of axioms.
 
----
+Both workflows automatically execute the relevant protocol configurations and generate concise summary files along with detailed execution logs.
 
-# 1. Benchmark Suite (`benchmark.sh`)
+## Benchmark Suite
 
-This script performs a head-to-head performance and correctness comparison between our **Current** model and the **Legacy** baseline. It iterates through all primary hash modes:
+The benchmark suite performs a head-to-head comparison between the **Current** and **Legacy** models across the primary hash configurations:
 
 - Collision (`col=1`)
 - No Collision (`col=0`)
 - Associative (`assoc`)
 
-across the complete protocol suite.
+For each protocol, the benchmark records both the verification outcome and execution time.
 
-## Execution
-
-```bash
-cd /root/MDH_construct/Testing/<protocol_name>
-bash benchmark.sh
-```
-
-## Output
+### Output
 
 ```
 benchmark.res
 ```
 
-This file contains the summarized verification results for all benchmark experiments.
+This file summarizes the verification results and performance comparison for all benchmark experiments.
 
----
+## Ablation Suite
 
-# 2. Ablation Suite (`ablation.sh`)
+The ablation suite evaluates the contribution of the proposed resolution improvements using the collision model (`col=1`). It compares four configurations to isolate the impact of each enhancement.
 
-To evaluate the contribution of our proposed axiomatic improvements, this script performs a controlled experiment using the **collision model (`col=1`)**. It systematically evaluates four configurations to isolate the impact of each enhancement.
-
-## Ablation Configurations
+### Ablation Configurations
 
 | Configuration | Description |
 |--------------|-------------|
 | **Legacy** | Original baseline from *Hash Gone Bad*. |
-| **Ablation_Jaffar** | Baseline + Jaffar's Directed Word Unification only. |
-| **Ablation_Infra** | Baseline + Structural/Depth Normalization axioms only. |
-| **Current** | Synergistic combination of all proposed resolution improvements. |
+| **Ablation_Jaffar** | Baseline with only Jaffar's Directed Word Unification. |
+| **Ablation_Infra** | Baseline with only the structural normalization and infrastructure axioms. |
+| **Current** | Complete implementation combining all proposed improvements. |
 
-## Execution
-
-```bash
-cd /root/MDH_construct/Testing/<protocol_name>
-bash ablation.sh
-```
-
-## Output
+### Output
 
 ```
 ablation.res
 ```
 
-This file contains the summarized verification results for all ablation experiments.
+This file summarizes the verification results for all four configurations.
 
----
+## Log Structure and Result Reporting
 
-# Log Structure and Result Reporting
+Each execution produces detailed logs in the `logs/` directory. The logs are organized according to the library set and verification model used during the experiment.
 
-Each execution generates detailed logs under the `logs/` directory. The logs are organized according to the library set and model used during the experiment.
+The summary files (`benchmark.res` and `ablation.res`) extract the key verification results from these logs.
 
-The summary files (`benchmark.res` and `ablation.res`) extract the key verification outcomes from these logs.
+Each result entry includes:
 
-Each result entry contains the following information:
-
-- **Protocol & Query** – The protocol and security property being verified (e.g., `sessionKeyA` secrecy).
-- **Result Status** – The verification outcome, which can be one of the following:
-  - **TRUE** – The security property is successfully verified.
-  - **FALSE** – A potential attack or security violation is detected.
-  - **CANNOT BE PROVED** – The prover could not establish the property, typically due to state-space limitations or unresolved Horn clauses.
-  - **TIMEOUT** – Verification exceeded the 120-second execution limit and was terminated due to state-space explosion.
+- **Protocol & Query** – The protocol and security property being verified (for example, `sessionKeyA` secrecy).
+- **Result Status** – One of the following outcomes:
+  - **TRUE** – The security property is verified.
+  - **FALSE** – A potential attack or security violation is found.
+  - **CANNOT BE PROVED** – The prover could not establish the property, typically due to unresolved Horn clauses or state-space limitations.
+  - **TIMEOUT** – Verification exceeded the 120-second execution limit and was terminated.
 
 ## Resources
 

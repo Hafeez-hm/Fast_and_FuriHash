@@ -1,70 +1,13 @@
 
 ########################################
-Starting NDSS IKE benchmark with LIB_SET=current
+Starting Full ike Collision Ablation with LIB_SET=legacy
 ########################################
 
-NDSS IKE with assoc: running...
+Full ike with collision (col=1): running...
 
-real	0m7.435s
-user	0m7.275s
-sys	0m0.160s
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B,x,y')) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> (event(initB(B,A,x,y')) && eq_hash(y,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B',x,y)) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(sessionKeyA(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT not event(SanityA(x)) is false.
-RESULT not event(SanityB(x)) is false.
-
-NDSS IKE no collision: running...
-
-real	0m5.172s
-user	0m5.104s
-sys	0m0.063s
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B,x,y')) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> (event(initB(B,A,x,y')) && eq_hash(y,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B',x,y)) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(sessionKeyA(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT not event(SanityA(x)) is false.
-RESULT not event(SanityB(x)) is false.
-
-NDSS IKE with collision: running...
-
-real	0m0.000s
-user	0m3.706s
-sys	0m0.076s
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B,x,y')) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(acceptA(A,B,x,y)) ==> (event(initB(B,A,x,y')) && eq_hash(y,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
-RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B',x,y)) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
-RESULT event(sessionKeyA(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT not event(SanityA(x)) is false.
-RESULT not event(SanityB(x)) is false.
-
-Completed NDSS IKE benchmark with LIB_SET=current
-
-########################################
-Starting NDSS IKE benchmark with LIB_SET=legacy
-########################################
-
-NDSS IKE with assoc: running...
-
-real	0m7.683s
-user	0m7.551s
-sys	0m0.084s
+real	0m53.681s
+user	0m52.159s
+sys	0m0.381s
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
 RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
@@ -76,12 +19,17 @@ RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event
 RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
 RESULT not event(SanityA(x)) is false.
 RESULT not event(SanityB(x)) is false.
+Completed legacy
 
-NDSS IKE no collision: running...
+########################################
+Starting Full ike Collision Ablation with LIB_SET=ablation_jaffar
+########################################
 
-real	0m7.341s
-user	0m7.102s
-sys	0m0.095s
+Full ike with collision (col=1): running...
+
+real	0m10.745s
+user	0m11.500s
+sys	0m0.061s
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
 RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
@@ -93,12 +41,17 @@ RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event
 RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
 RESULT not event(SanityA(x)) is false.
 RESULT not event(SanityB(x)) is false.
+Completed ablation_jaffar
 
-NDSS IKE with collision: running...
+########################################
+Starting Full ike Collision Ablation with LIB_SET=ablation_infra
+########################################
 
-real	0m48.594s
-user	0m47.794s
-sys	0m0.271s
+Full ike with collision (col=1): running...
+
+real	0m16.760s
+user	0m15.738s
+sys	0m0.253s
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
 RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
 RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
@@ -106,17 +59,37 @@ RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B,x,y')) && eq_hash(y,y')) || 
 RESULT event(acceptA(A,B,x,y)) ==> (event(initB(B,A,x,y')) && eq_hash(y,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
 RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B',x,y)) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
 RESULT event(sessionKeyA(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
-RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is false.
+RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) cannot be proved.
 RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
 RESULT not event(SanityA(x)) is false.
 RESULT not event(SanityB(x)) is false.
+Completed ablation_infra
 
-Completed NDSS IKE benchmark with LIB_SET=legacy
+########################################
+Starting Full ike Collision Ablation with LIB_SET=current
+########################################
 
-Generated NDSS IKE log files:
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/current/LOG_assoc.txt
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/current/LOG_col.txt
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/current/LOG_no.txt
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/legacy/LOG_assoc.txt
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/legacy/LOG_col.txt
-/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/legacy/LOG_no.txt
+Full ike with collision (col=1): running...
+
+real	0m3.536s
+user	0m3.316s
+sys	0m0.055s
+RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B,x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
+RESULT event(acceptA(A,B,x,y)) ==> event(initB(B,A,x,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
+RESULT event(acceptB(B,A,x,y)) ==> event(initA(A,B',x,y')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
+RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B,x,y')) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
+RESULT event(acceptA(A,B,x,y)) ==> (event(initB(B,A,x,y')) && eq_hash(y,y')) || event(Dishonest(A)) || event(Dishonest(B)) is true.
+RESULT event(acceptB(B,A,x,y)) ==> (event(initA(A,B',x,y)) && eq_hash(y,y')) || event(Dishonest(B)) || event(Dishonest(A)) is false.
+RESULT event(sessionKeyA(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
+RESULT event(sessionKeyB(B,A,k)) && attacker(k) ==> event(Dishonest(B)) || event(Dishonest(A)) is true.
+RESULT event(acceptB2(B,A,x,y,h)) ==> (event(initA2(A,B',x',y',h')) && eq_hash(h,h')) || event(Dishonest(B)) || event(Dishonest(A)) is true.
+RESULT not event(SanityA(x)) is false.
+RESULT not event(SanityB(x)) is false.
+Completed current
+
+########################################
+Generated Full ike Ablation log files:
+/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/ablation/ablation_infra/LOG_col.txt
+/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/ablation/ablation_jaffar/LOG_col.txt
+/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/ablation/current/LOG_col.txt
+/root/MDH_construct/Testing/NDSS_ikeV2_HF_EC/logs/ablation/legacy/LOG_col.txt

@@ -1,4 +1,4 @@
-# Hash Gone Right 
+# Extending Porverif's Resolution of hash based Protocols  
 
 **B.Tech Final Year Thesis Project**  
 **NIT Calicut, 2024-25**
@@ -48,75 +48,147 @@ MDH_construct/
 - **libs/**: Contains hash-model libraries split by version:
   - `libs/current/` for the improved implementation.
   - `libs/legacy/` for the baseline/original implementation used for comparison.
+  - `libs/ablation_jaffar/`: The legacy implementation extended with Jaefar's Directed Word Unification Axiom.
+  - `libs/ablation_infra/`: The legacy implementation extended with structural infrastructure axioms (handling depth mismatches and concrete variable tracking).
 - **README.md**: Local documentation for the MDH workspace and usage notes specific to this subproject.
 
+## Protocol Sources /protocol directory
 
-## Setup and Run Guide
+The protocol models present in /protocols utilized in this repository are categorized by their origin to distinguish between existing industry benchmarks and our custom-built verification challenges.
 
-This repository (**Hash_Gone_Right**) contains the implementation of **Jaffar's algorithm**, plus **resolution-level merge axioms** and **attacker-head variable axioms**.
+- **Baseline Protocols (IKEv2 & Sigma)**: 
+  - **NDSS_ikeV2_HF_EC**, **sigma_HF_EC**, and **simplified_ikeV2_HF_EC**: These were adapted from the model collection provided in the ["Hash Gone Bad"](https://github.com/charlie-j/symbolic-hash-models) repository. They serve as the standardized benchmark suite for comparing our resolution improvements against the original implementation.
+  
+- **Foundational Library Models**:
+  - **Protocol_Models_Adapted** (`MACs.pv`, `WMF-auth.pv`, `Proba-pk.pv`): These are adapted from the official [ProVerif distribution library](https://bblanche.gitlabpages.inria.fr/proverif/). They provide the standard, foundational proofs required for any hash-based symbolic verification suite.
 
-### 1. Clone the Repository
+- **Custom Edge-Case Challenges**:
+  - **Universal_Protocol_Test**: These models were designed and implemented by us. Unlike the baseline benchmarks, this protocol was specifically engineered to stress-test the boundary conditions of our resolution axioms (e.g., highly nested associative tuples and extreme transcript depths) to ensure the framework does not exhibit state explosion or false negatives under non-standard configurations.
 
+
+# Setup and Run Guide
+
+This repository (**proverif-hash-resolution**) contains the implementation of **Jaffar's algorithm**, along with **resolution-level merge axioms** and **attacker-head variable axioms**.
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/Hafeez-hm/proverif-hash-resolution.git
+cd proverif-hash-resolution
 ```
-git clone https://github.com/Hafeez-hm/Hash_Gone_Right.git
-cd Hash_Gone_Right
+
+---
+
+## 2. Pull the Docker Image
+
+```bash
+docker pull hafeez2003/proverif-hash-resolution:ae-v1.0
 ```
 
-### 2. Pull the Docker Image
+---
 
-```
-docker pull hafeez2003/proverif-jaffar:latest
-```
+## 3. Run the Docker Container
 
-### 3. Run the Docker Container
-
-```
-docker run -it -v ~/projects/Fast_and_FuriHash:/root hafeez2003/proverif-jaffar:latest /bin/bash
+```bash
+docker run -it -v $(pwd):/root/MDH_construct hafeez2003/proverif-hash-resolution:ae-v1.0 /bin/bash
 ```
 
-### 4. Enter the Main Verification Workspace
+---
 
-Inside the container, go to:
+## 4. Enter the Main Verification Workspace
 
-```
+Inside the container, navigate to the main workspace:
+
+```bash
 cd /root/MDH_construct
 ```
 
-### 5. Understand the Core MDH Directories
+---
 
-- `libs/`: Contains the hash-model libraries.
-  - `libs/current/` contains the improved implementation.
-  - `libs/legacy/` contains the baseline implementation for comparison.
-- `Protocols/`: Contains all modeled protocol files used by verification runs.
-- `Testing/`: Contains per-protocol benchmark folders, each with a `benchmark.sh` runner.
+## 5. Running the Benchmark Suite (Head-to-Head Comparison)
 
-### 6. Run Benchmarks
+Use this workflow to compare the **Current** model against the **Legacy** baseline for both correctness and performance.
 
-Each protocol under `Testing/` has its own `benchmark.sh`.
-The script runs the protocol against both `current` and `legacy` libraries, writes detailed logs, and generates a summary `.res` file.
-
-Example (Simplified IKE):
-
-```
-cd /root/MDH_construct/Testing/simplified_ikeV2_HF_EC
+```bash
+cd /root/MDH_construct/Testing/<protocol_name>
 bash benchmark.sh
 ```
 
-### 7. View Results
-
-- Summary output: `benchmark.res` in that protocol's testing folder.
-- Detailed logs: `logs/current/` and `logs/legacy/` in the same folder.
-
-### 8. Run a Single Protocol Directly with Make
-
-From `/root/MDH_construct`:
+### Output
 
 ```
+benchmark.res
+```
+
+This file summarizes the verification results comparing the **Current** and **Legacy** models.
+
+---
+
+## 6. Running the Ablation Suite (Contribution Validation)
+
+Use this workflow to reproduce the ablation experiments. These experiments demonstrate the individual contributions of the **Directed Word Unification algorithm** and the **Infrastructure Axioms**.
+
+```bash
+cd /root/MDH_construct/Testing/<protocol_name>
+bash ablation.sh
+```
+
+### Output
+
+```
+ablation.res
+```
+
+This file summarizes the verification results for the following configurations:
+
+- **Legacy**
+- **Ablation_Jaffar**
+- **Ablation_Infra**
+- **Current**
+
+---
+
+## 7. View Results
+
+### Summary Results
+
+The summary files are located within each protocol's testing directory:
+
+- `benchmark.res`
+- `ablation.res`
+
+### Detailed Logs
+
+Detailed execution logs are stored in:
+
+```
+logs/
+```
+
+The logs are organized by the library set and model used during execution.
+
+---
+
+## 8. Run a Single Protocol Directly with `make`
+
+From the main workspace (`/root/MDH_construct`), individual protocol experiments can be executed manually.
+
+### Examples
+
+```bash
 make ike=1 LIB_SET=current
 make ike=1 LIB_SET=legacy
 ```
 
-Available selectors include `ike`, `ike_s`, `sigma`, `universal`, and `protosuite`.
+### Available Protocol Selectors
+
+- `ike`
+- `ike_s`
+- `sigma`
+- `universal`
+- `protosuite`
 
 ### 9. Main Axiom Library Files
 
@@ -128,9 +200,101 @@ The main axioms are implemented in:
 
 Legacy baselines are available under the same filenames in `libs/legacy/`.
 
+### System Requirements
+
+To ensure stable execution of the verification models, we recommend the following host specifications:
+
+- **OS:** Linux (or Windows with WSL2).
+- **RAM:** Minimum 8GB (12GB recommended). 
+- **Disk Space:** At least 2GB of free space is required to accommodate the detailed execution logs generated in the `logs/` directory during a full benchmark run.
+- **Docker:** Docker Engine (Version 20.10+) or Docker Desktop.
+
+*Note: The results presented in our paper were verified on an Intel Core i5-11300H @ 3.10GHz processor with 12GB of RAM using a WSL2-based Linux environment. Experiments range from seconds to ~2 minutes per protocol. A timeout of 120s is enforced to prevent state-space explosion on complex models*
+
+# Testing Framework Overview
+
+The `Testing/` directory provides a comprehensive framework to validate the correctness and performance of our improved resolution axioms. We provide two distinct testing workflows:
+
+- **Benchmark Suite** – Direct comparison between the current and legacy models.
+- **Ablation Suite** – Scientific validation of the contribution of individual axiomatic improvements.
+
+---
+
+# 1. Benchmark Suite (`benchmark.sh`)
+
+This script performs a head-to-head performance and correctness comparison between our **Current** model and the **Legacy** baseline. It iterates through all primary hash modes:
+
+- Collision (`col=1`)
+- No Collision (`col=0`)
+- Associative (`assoc`)
+
+across the complete protocol suite.
+
+## Execution
+
+```bash
+cd /root/MDH_construct/Testing/<protocol_name>
+bash benchmark.sh
+```
+
+## Output
+
+```
+benchmark.res
+```
+
+This file contains the summarized verification results for all benchmark experiments.
+
+---
+
+# 2. Ablation Suite (`ablation.sh`)
+
+To evaluate the contribution of our proposed axiomatic improvements, this script performs a controlled experiment using the **collision model (`col=1`)**. It systematically evaluates four configurations to isolate the impact of each enhancement.
+
+## Ablation Configurations
+
+| Configuration | Description |
+|--------------|-------------|
+| **Legacy** | Original baseline from *Hash Gone Bad*. |
+| **Ablation_Jaffar** | Baseline + Jaffar's Directed Word Unification only. |
+| **Ablation_Infra** | Baseline + Structural/Depth Normalization axioms only. |
+| **Current** | Synergistic combination of all proposed resolution improvements. |
+
+## Execution
+
+```bash
+cd /root/MDH_construct/Testing/<protocol_name>
+bash ablation.sh
+```
+
+## Output
+
+```
+ablation.res
+```
+
+This file contains the summarized verification results for all ablation experiments.
+
+---
+
+# Log Structure and Result Reporting
+
+Each execution generates detailed logs under the `logs/` directory. The logs are organized according to the library set and model used during the experiment.
+
+The summary files (`benchmark.res` and `ablation.res`) extract the key verification outcomes from these logs.
+
+Each result entry contains the following information:
+
+- **Protocol & Query** – The protocol and security property being verified (e.g., `sessionKeyA` secrecy).
+- **Result Status** – The verification outcome, which can be one of the following:
+  - **TRUE** – The security property is successfully verified.
+  - **FALSE** – A potential attack or security violation is detected.
+  - **CANNOT BE PROVED** – The prover could not establish the property, typically due to state-space limitations or unresolved Horn clauses.
+  - **TIMEOUT** – Verification exceeded the 120-second execution limit and was terminated due to state-space explosion.
+
 ## Resources
 
-- **Docker Image:** [hafeez2003/proverif-jaffar](https://hub.docker.com/r/hafeez2003/proverif-jaffar)
+- **Docker Image:** [hafeez2003/proverif-hash-resolution](https://hub.docker.com/r/hafeez2003/proverif-hash-resolution)
 - **DeepWiki:** [deepwiki.com/arunnats/proverif-compfun/](https://deepwiki.com/arunnats/proverif-compfun/)
 - **Original Paper:** [Hash Gone Bad (USENIX Security'23)](https://www.usenix.org/conference/usenixsecurity23/presentation/cheval)
 - **Original Repository:** [charlie-j/symbolic-hash-models](https://github.com/charlie-j/symbolic-hash-models)

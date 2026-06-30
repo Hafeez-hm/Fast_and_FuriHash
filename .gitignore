@@ -3,6 +3,7 @@ Docker/res/
 
 # Ignore ProVerif log files produced during analysis
 Proverif-Case-Studies/**/LOG*.txt
+MDH_construct/**/logs 
 
 # User and local files
 .bash_history
@@ -67,3 +68,6 @@ out/
 /diff-check/proverif2.03
 proverif_substantive_changes.patch
 proverif_full_changes.patch
+/s7-midsem
+/s7-endsem
+/s8-midsem

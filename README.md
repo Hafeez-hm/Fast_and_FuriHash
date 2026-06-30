@@ -71,27 +71,27 @@ The protocol models present in /protocols utilized in this repository are catego
 This repository (**proverif-hash-resolution**) contains the implementation of **Jaffar's algorithm**, along with **resolution-level merge axioms** and **attacker-head variable axioms**.
 
 
-## 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Hafeez-hm/proverif-hash-resolution.git
 cd proverif-hash-resolution
 ```
 
-## 2. Pull the Docker Image
+### 2. Pull the Docker Image
 
 ```bash
 docker pull hafeez2003/proverif-hash-resolution:ae-v1.0
 ```
 
 
-## 3. Run the Docker Container
+### 3. Run the Docker Container
 
 ```bash
 docker run -it -v $(pwd):/root/MDH_construct hafeez2003/proverif-hash-resolution:ae-v1.0 /bin/bash
 ```
 
-## 4. Enter the Main Verification Workspace
+### 4. Enter the Main Verification Workspace
 
 Inside the container, navigate to the main workspace:
 
@@ -100,7 +100,7 @@ cd /root/MDH_construct
 ```
 
 
-## 5. Running the Benchmark Suite (Head-to-Head Comparison)
+### 5. Running the Benchmark Suite (Head-to-Head Comparison)
 
 Use this workflow to compare the **Current** model against the **Legacy** baseline for both correctness and performance.
 
@@ -109,7 +109,7 @@ cd /root/MDH_construct/Testing/<protocol_name>
 bash benchmark.sh
 ```
 
-### Output
+#### Output
 
 ```
 benchmark.res
@@ -118,7 +118,7 @@ benchmark.res
 This file summarizes the verification results comparing the **Current** and **Legacy** models.
 
 
-## 6. Running the Ablation Suite (Contribution Validation)
+### 6. Running the Ablation Suite (Contribution Validation)
 
 Use this workflow to reproduce the ablation experiments. These experiments demonstrate the individual contributions of the **Directed Word Unification algorithm** and the **Infrastructure Axioms**.
 
@@ -127,7 +127,7 @@ cd /root/MDH_construct/Testing/<protocol_name>
 bash ablation.sh
 ```
 
-### Output
+#### Output
 
 ```
 ablation.res
@@ -141,7 +141,7 @@ This file summarizes the verification results for the following configurations:
 - **Current**
 
 
-## 7. View Results
+### 7. View Results
 
 ### Summary Results
 
@@ -160,18 +160,18 @@ logs/
 
 The logs are organized by the library set and model used during execution.
 
-## 8. Run a Single Protocol Directly with `make`
+### 8. Run a Single Protocol Directly with `make`
 
 From the main workspace (`/root/MDH_construct`), individual protocol experiments can be executed manually.
 
-### Examples
+#### Examples
 
 ```bash
 make ike=1 LIB_SET=current
 make ike=1 LIB_SET=legacy
 ```
 
-### Available Protocol Selectors
+#### Available Protocol Selectors
 
 - `ike`
 - `ike_s`

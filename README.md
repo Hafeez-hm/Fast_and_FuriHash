@@ -263,6 +263,16 @@ Each result entry includes:
   - **CANNOT BE PROVED** – The prover could not establish the property, typically due to unresolved Horn clauses or state-space limitations.
   - **TIMEOUT** – Verification exceeded the 120-second execution limit and was terminated.
 
+## Cross-Verification with Tamarin
+
+To ensure the mathematical soundness and methodology-agnostic validity of our proposed resolution axioms, we performed an independent cross-verification of our results using the **Tamarin Prover**. 
+
+We translated our complete suite of hash-based protocols—from foundational models into Tamarin's multiset rewriting framework. This parallel evaluation confirms that the security guarantees and vulnerabilities identified by our extended ProVerif implementation hold true across different state-of-the-art symbolic verification engines.
+
+The translated protocol theories, automated execution scripts, and compiled verification summaries are maintained in a dedicated companion repository:
+
+🔗 **[Tamarin Cross-Verification Repository](https://github.com/Hafeez-hm/tamarin-cross-verification)**
+
 ## Resources
 
 - **Docker Image:** [hafeez2003/proverif-hash-resolution](https://hub.docker.com/r/hafeez2003/proverif-hash-resolution)
@@ -270,6 +280,7 @@ Each result entry includes:
 - **Original Paper:** [Hash Gone Bad (USENIX Security'23)](https://www.usenix.org/conference/usenixsecurity23/presentation/cheval)
 - **Original Repository:** [charlie-j/symbolic-hash-models](https://github.com/charlie-j/symbolic-hash-models)
 - **ProVerif Documentation:** [bblanche.gitlabpages.inria.fr/proverif](https://bblanche.gitlabpages.inria.fr/proverif/)
+- **Tamarin Cross-Verification Repository** - [hafeez2003/tamarin-cross-verification](https://github.com/Hafeez-hm/tamarin-cross-verification)
 
 ## License
 
